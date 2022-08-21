@@ -22,7 +22,7 @@ class WechatShare(api: IWXAPI, param: WechatShareParam) : AbsWechatShare(api, pa
 
     private fun miniProgram(): WXMediaMessage? {
 
-        var err = mutableListOf<String>()
+        val err = mutableListOf<String>()
         if (param.miniProgramId.isNullOrEmpty()) {
             err + "miniProgramId"
         }
@@ -59,7 +59,7 @@ class WechatShare(api: IWXAPI, param: WechatShareParam) : AbsWechatShare(api, pa
 
     private fun video(): WXMediaMessage? {
 
-        var err = mutableListOf<String>()
+        val err = mutableListOf<String>()
         if (param.videoUrl.isNullOrEmpty()) {
             err + "videoUrl"
         }

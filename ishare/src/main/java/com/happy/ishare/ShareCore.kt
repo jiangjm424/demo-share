@@ -15,7 +15,7 @@ abstract class ShareCore(para: ShareParam) {
     protected var errorMsg: String? = null
     fun share(callback: ShareCallback?) {
         if (!checkParam(callback)) {
-            callback?.onFail(ShareCallback.ERR_INVALID_PARAM,errorMsg)
+            callback?.onFail(ShareCallback.ERR_INVALID_PARAM, errorMsg)
             return
         }
         shareInner(callback)
@@ -33,17 +33,23 @@ abstract class ShareCore(para: ShareParam) {
 
     interface ShareCallback {
         companion object {
-            const val ERR_INVALID_PARAM:Int = -1
-            const val ERR_CANCEL:Int = -2
-            const val ERR_UNKNOWN:Int = -3
+            const val ERR_INVALID_PARAM: Int = -1
+            const val ERR_CANCEL: Int = -2
+            const val ERR_UNKNOWN: Int = -3
         }
+
         fun onSuccess()
-        fun onFail(errCode:Int,errMsg: String?)
+        fun onFail(errCode: Int, errMsg: String?)
     }
 
-    class Builder {
+    class Builder(platform: Platform) {
         private var sharePlatform: Platform = Platform.UnKnown
         internal var shareParam: ShareParam? = null
+
+        init {
+            sharePlatform = platform
+        }
+
         fun build(): ShareCore? {
             if (ShareSDK.DEBUG && shareParam == null) {
                 error("Assertion failed")
@@ -51,14 +57,13 @@ abstract class ShareCore(para: ShareParam) {
             return ShareSDK.shareFactory()?.getShareFactory(sharePlatform)?.createShareImp(this)
         }
 
-        fun setPlatform(platform: Platform): Builder {
+        fun platform(platform: Platform) = apply {
             sharePlatform = platform
-            return this
+            shareParam = null
         }
 
-        fun setShareParam(para: ShareParam): Builder {
+        fun shareParam(para: ShareParam) = apply {
             shareParam = para
-            return this
         }
     }
 }

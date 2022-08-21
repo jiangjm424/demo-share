@@ -54,8 +54,8 @@ class MainActivity : AppCompatActivity() {
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
             R.id.action_settings -> {
-                ShareCore.Builder().setPlatform(Platform.CopyLink)
-                    .setShareParam(LinkShareParam().apply {
+                ShareCore.Builder(Platform.CopyLink)
+                    .shareParam(LinkShareParam().apply {
                         title = "title"
                         description = "desc"
                         link = "link"
