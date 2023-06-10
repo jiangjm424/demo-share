@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="copy_link">复制链接</string>
+    <string name="qq_friend">QQ</string>
+    <string name="qq_qzone">QQ空间</string>
+    <string name="wechat_session">微信</string>
+    <string name="wechat_favorite">收藏</string>
+    <string name="wechat_timeline">朋友圈</string>
+</resources>

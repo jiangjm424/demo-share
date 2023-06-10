@@ -3,7 +3,6 @@ package com.grank.db.demo
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -11,14 +10,19 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
-import androidx.lifecycle.lifecycleScope
 import com.grank.db.demo.databinding.ActivityMainBinding
 import com.happy.ishare.ShareCore
-import com.happy.ishare.core.Platform
+import com.happy.ishare.ShareSDK
+import com.happy.ishare.core.Scene
+import com.happy.ishare.core.ShareEntity
+import com.happy.ishare.core.ShareParam
+import com.happy.ishare.link.CopyLink
 import com.happy.ishare.link.LinkShareParam
-import com.happy.ishare.wechat.WechatShareParam
+import com.happy.ishare.ui.ShareDialog
+import com.happy.ishare.utils.toByteArray
+import com.happy.ishare.utils.toThumbnail
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), ShareDialog.ShareClickListener {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
@@ -36,10 +40,25 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
-        binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+        binding.fab.setOnClickListener {
+            ShareDialog().show(supportFragmentManager, "")
         }
+    }
+
+    override fun onClick(scene: Scene, pos: Int) {
+        Log.i("jiang", "scene:$scene, platform:${scene.platform}, pos:$pos")
+        ShareCore.Builder(scene.platform)
+            .shareEntity(
+                ShareEntity().apply {
+                    title = "title"
+                    description = "desc"
+                    url = "www.baidu.com"
+                    this.scene = scene
+                    thumbData = BitmapFactory.decodeResource(resources, R.drawable.wechat)
+                        .toThumbnail(150, 150).toByteArray()
+                }
+            ).scene(scene)
+            .build()?.share()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -54,27 +73,30 @@ class MainActivity : AppCompatActivity() {
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
             R.id.action_settings -> {
-                ShareCore.Builder(Platform.CopyLink)
-                    .shareParam(LinkShareParam().apply {
-                        title = "title"
-                        description = "desc"
-                        link = "link"
-//                        webPageUrl = "www.baidu.com"
-//                        bitmap = BitmapFactory.decodeResource(
-//                            resources,
-//                            R.drawable.ic_launcher_background
-//                        )
-                    }).build()?.share(object : ShareCore.ShareCallback {
-                    override fun onSuccess() {
-                        Log.i("jiang", "copy sucess")
-                    }
+                ShareSDK.allSupportShareScene().forEach {
+                    Log.i("jiang", "scene:$it")
+                }
+                ShareCore.Builder(CopyLink)
+                    .shareEntity(
+                        ShareEntity().apply {
+                            title = "title"
+                            description = "desc"
+                            url = "www.baidu.com"
+                            thumbData = BitmapFactory.decodeResource(resources, R.drawable.wechat)
+                                .toByteArray()
+                        }
+                    ).build()?.share(object : ShareCore.ShareCallback {
+                        override fun onSuccess() {
+                            Log.i("jiang", "copy sucess")
+                        }
 
-                    override fun onFail(errCode: Int, errMsg: String?) {
-                        Log.i("jiang", "copy fail:$errMsg")
-                    }
-                })
+                        override fun onFail(errCode: Int, errMsg: String?) {
+                            Log.i("jiang", "copy fail:$errMsg")
+                        }
+                    })
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }

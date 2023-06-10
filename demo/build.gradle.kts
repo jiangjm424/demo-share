@@ -1,4 +1,3 @@
-
 import buildhelper.setupAppModule
 
 plugins {
@@ -10,9 +9,16 @@ plugins {
 setupAppModule {
     defaultConfig {
         applicationId = "com.share.sample"
-        manifestPlaceholders["WECHAT_APPID"]="xxxxx"
+        manifestPlaceholders["WECHAT_APPID"] = "xxxxx"
+        manifestPlaceholders["QQ_APPID"] = "xxxxx"
     }
+
     buildTypes {
+        getByName("debug") {
+            isMinifyEnabled = false
+            isShrinkResources = false
+            signingConfig = signingConfigs["debug"]
+        }
         release {
             isMinifyEnabled = true
             isShrinkResources = true
@@ -23,8 +29,10 @@ setupAppModule {
 }
 
 dependencies {
-    implementation(projects.ishare)
-//    implementation("io.github.jiangjm424:ishare:+")
+    implementation(projects.ishareCore)
+    implementation(projects.ishareWechat)
+    implementation(projects.ishareQq)
+    implementation(projects.ishareUi)
     implementation(libs.androidx.core)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

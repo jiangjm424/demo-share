@@ -1,6 +1,7 @@
 # Android
 local.properties
 *.DS_Store
+keystore/
 
 # Gradle
 .gradle

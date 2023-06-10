@@ -37,6 +37,9 @@ allprojects {
         google()
         mavenCentral()
         jcenter()
+        maven {
+            setUrl("https://maven.aliyun.com/repository/public/")
+        }
 //        maven {
 //            setUrl("https://s01.oss.sonatype.org/content/repositories/snapshots/")
 //        }
