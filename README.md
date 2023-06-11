@@ -16,14 +16,6 @@ dependencies {
     implementation("io.github.jiangjm424:ishare-ui:$version")
 }
 ```
-当然还有一个简单的方法，直接依赖全部的lib
-```kt
-dependencies {
-    val version = "0.0.4"
-    implementation("io.github.jiangjm424:ishare-bom:$version")
-}
-```
-
 #### 2
 在依赖后，需要在app启动中进行初始化当依赖了
 ```kt

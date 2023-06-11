@@ -136,9 +136,6 @@ private fun <T : BaseExtension> Project.setupBaseModule(
                 "-Xno-param-assertions",
                 "-Xno-receiver-assertions",
             )
-            if (project.name != "coil-benchmark" && project.name != "coil-test-internal") {
-                arguments += "-opt-in=coil.annotation.ExperimentalCoilApi"
-            }
             freeCompilerArgs.addAll(arguments)
         }
     }

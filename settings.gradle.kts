@@ -9,7 +9,6 @@ include(
     "ishare-qq",
     "ishare-wechat",
     "ishare-ui",
-    "ishare-bom",
 )
 
 // Private modules
