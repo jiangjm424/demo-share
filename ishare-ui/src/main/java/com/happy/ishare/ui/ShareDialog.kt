@@ -62,6 +62,7 @@ class ShareDialog : DialogFragment() {
                 sceneResMap[it]
             },
         )
+        binding.shareList.layoutManager = DisableScrollLinearLayoutManager(requireContext(), 4)
     }
 
     private fun setupWindowStyle(w: Window?) = w?.let {
