@@ -47,6 +47,7 @@ dependencies {
     implementation(projects.ishareWechat)
     implementation(projects.ishareQq)
     implementation(projects.ishareUi)
+
     implementation(libs.androidx.core)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
