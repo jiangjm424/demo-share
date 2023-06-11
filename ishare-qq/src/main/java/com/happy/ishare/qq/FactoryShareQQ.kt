@@ -33,18 +33,18 @@ class FactoryShareQQ(context: Context) : AbsFactoryShare() {
         val appId = context.getAppMetaData("QQ_APPID")
         return Tencent.createInstance(appId, context, ShareSDK.authorities)
     }
-    override fun convertShareEntity2ShareParam(entity: ShareEntity): QQShareParam {
+    override fun convertShareEntity2ShareParam(scene: Scene?, entity: ShareEntity): QQShareParam {
         val param = entity.attachInfo as? QQShareParam
         return param ?: QQShareParam().apply {
             title = entity.title
             description = entity.description
             webPageUrl = entity.url
             thumbData = entity.thumbData
-            scene = entity.scene as? QQScene ?: QQScene.Friends
+            this.scene = scene as? QQScene ?: QQScene.Friends
         }
     }
     override fun createShareImp(builder: ShareCore.Builder): ShareCore? {
-        val qqParam = convertShareEntity2ShareParam(builder.shareEntity!!)
+        val qqParam = convertShareEntity2ShareParam(builder.shareScene, builder.shareEntity!!)
         return when (qqParam.scene) {
             QQScene.Friends -> QQShareImp(qqApi, qqParam)
             QQScene.QZone -> QZoneShareImp(qqApi, qqParam)

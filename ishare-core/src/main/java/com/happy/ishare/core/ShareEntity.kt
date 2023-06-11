@@ -34,6 +34,5 @@ class ShareEntity {
     var description: String? = null
     var thumbData: ByteArray? = null
     var url: String? = null
-    var scene: Scene? = null
     var attachInfo: ShareParam? = null
 }

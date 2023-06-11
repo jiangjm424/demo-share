@@ -25,10 +25,10 @@ import com.happy.ishare.core.ShareEntity
 
 class FactoryShareLink(private val context: Context) : AbsFactoryShare() {
     override fun createShareImp(builder: ShareCore.Builder): ShareCore? {
-        return LinkShare(context, convertShareEntity2ShareParam(builder.shareEntity!!))
+        return LinkShare(context, convertShareEntity2ShareParam(builder.shareScene, builder.shareEntity!!))
     }
 
-    override fun convertShareEntity2ShareParam(entity: ShareEntity): LinkShareParam {
+    override fun convertShareEntity2ShareParam(scene: Scene?, entity: ShareEntity): LinkShareParam {
         return LinkShareParam().apply {
             link = entity.url
         }

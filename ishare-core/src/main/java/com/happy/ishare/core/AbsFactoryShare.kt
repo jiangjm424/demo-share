@@ -20,7 +20,7 @@ import com.happy.ishare.ShareCore
 
 abstract class AbsFactoryShare {
     abstract fun createShareImp(builder: ShareCore.Builder): ShareCore?
-    protected abstract fun convertShareEntity2ShareParam(entity: ShareEntity): ShareParam
+    protected abstract fun convertShareEntity2ShareParam(scene: Scene?, entity: ShareEntity): ShareParam
     abstract val platform: Platform
     abstract val scenes: List<Scene>
 }

@@ -67,7 +67,6 @@ class MainActivity : AppCompatActivity(), ShareDialog.ShareClickListener {
                     title = "title"
                     description = "desc"
                     url = "www.baidu.com"
-                    this.scene = scene
                     thumbData = BitmapFactory.decodeResource(resources, R.drawable.wechat)
                         .toThumbnail(150, 150).toByteArray()
                 },

@@ -28,7 +28,7 @@ class FactoryShareFake : AbsFactoryShare() {
         return FakeShareImpl(ShareParam())
     }
 
-    override fun convertShareEntity2ShareParam(entity: ShareEntity): ShareParam {
+    override fun convertShareEntity2ShareParam(scene: Scene?, entity: ShareEntity): ShareParam {
         TODO("Not yet implemented")
     }
     override val platform: Platform

@@ -34,19 +34,19 @@ class FactoryShareWechat(context: Context) : AbsFactoryShare() {
         return WXAPIFactory.createWXAPI(context, appId, false)
     }
 
-    override fun convertShareEntity2ShareParam(entity: ShareEntity): WechatShareParam {
+    override fun convertShareEntity2ShareParam(scene: Scene?, entity: ShareEntity): WechatShareParam {
         val param = entity.attachInfo as? WechatShareParam
         return param ?: WechatShareParam().apply {
             title = entity.title
             description = entity.description
             webPageUrl = entity.url
             thumbData = entity.thumbData
-            mTargetScene = entity.scene as? WechatScene ?: WechatScene.Session
+            mTargetScene = scene as? WechatScene ?: WechatScene.Session
         }
     }
 
     override fun createShareImp(builder: ShareCore.Builder): ShareCore {
-        return WechatShare(wxApi, convertShareEntity2ShareParam(builder.shareEntity!!))
+        return WechatShare(wxApi, convertShareEntity2ShareParam(builder.shareScene, builder.shareEntity!!))
     }
 
     override val platform: Platform
