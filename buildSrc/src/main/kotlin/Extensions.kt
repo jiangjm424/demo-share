@@ -2,11 +2,9 @@
 
 package buildhelper
 
+import kotlin.math.pow
 import org.gradle.api.Project
 import org.gradle.api.provider.Property
-import org.gradle.api.provider.Provider
-import org.gradle.api.provider.SetProperty
-import kotlin.math.pow
 
 val Project.minSdk: Int
     get() = intProperty("minSdk")
@@ -18,10 +16,10 @@ val Project.compileSdk: Int
     get() = intProperty("compileSdk")
 
 val Project.groupId: String
-    get() = stringProperty("GROUP")
+    get() = stringProperty("POM_GROUP_ID")
 
 val Project.versionName: String
-    get() = stringProperty("VERSION_NAME")
+    get() = stringProperty("POM_VERSION")
 
 val Project.versionCode: Int
     get() = versionName
@@ -33,6 +31,17 @@ val Project.versionCode: Int
             // 1.2.3 -> 102030
             (unit * 10.0.pow(2 * index + 1)).toInt()
         }
+
+val publicModules = listOf(
+    "ishare-core",
+    "ishare-qq",
+    "ishare-wechat",
+    "ishare-ui",
+)
+
+val privateModules = listOf(
+    "app",
+)
 
 private fun Project.intProperty(name: String): Int {
     return (property(name) as String).toInt()
@@ -52,7 +61,3 @@ private inline fun <T> List<T>.sumByIndexed(selector: (Int, T) -> Int): Int {
 }
 
 inline infix fun <T> Property<T>.by(value: T) = set(value)
-
-inline infix fun <T> Property<T>.by(provider: Provider<T>) = set(provider)
-
-inline infix fun <T> SetProperty<T>.by(value: Set<T>) = set(value)

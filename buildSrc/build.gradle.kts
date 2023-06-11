@@ -1,5 +1,5 @@
 plugins {
-    `kotlin-dsl`
+    `kotlin-dsl-base`
 }
 
 repositories {
@@ -10,4 +10,9 @@ repositories {
 dependencies {
     implementation(libs.gradlePlugin.android)
     implementation(libs.gradlePlugin.kotlin)
+    implementation(libs.gradlePlugin.mavenPublish)
+}
+
+kotlin {
+    jvmToolchain(11)
 }

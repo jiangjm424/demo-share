@@ -1,3 +1,5 @@
+rootProject.name = "ishare"
+
 @Suppress("UnstableApiUsage")
 dependencyResolutionManagement {
     versionCatalogs {

@@ -1,3 +1,19 @@
+/*
+ * Copyright 2023 The IShare Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.happy.ishare.wechat
 
 import com.happy.ishare.ShareSDK
@@ -11,7 +27,6 @@ import com.tencent.mm.opensdk.modelmsg.WXTextObject
 import com.tencent.mm.opensdk.modelmsg.WXVideoObject
 import com.tencent.mm.opensdk.modelmsg.WXWebpageObject
 import com.tencent.mm.opensdk.openapi.IWXAPI
-
 
 internal class WechatShare(api: IWXAPI, param: WechatShareParam) : AbsWechatShare(api, param) {
 
@@ -42,12 +57,15 @@ internal class WechatShare(api: IWXAPI, param: WechatShareParam) : AbsWechatShar
         miniProgramObj.webpageUrl = param.webPageUrl // 兼容低版本的网页链接
 
         miniProgramObj.miniprogramType =
-            if (ShareSDK.DEBUG) WXMiniProgramObject.MINIPROGRAM_TYPE_TEST else
+            if (ShareSDK.DEBUG) {
+                WXMiniProgramObject.MINIPROGRAM_TYPE_TEST
+            } else {
                 WXMiniProgramObject.MINIPTOGRAM_TYPE_RELEASE // 正式版:0，测试版:1，体验版:2
+            }
         miniProgramObj.withShareTicket = param.withShareTicket
-        miniProgramObj.userName = param.miniProgramId  //"gh_d43f693ca31f" // 小程序原始id
+        miniProgramObj.userName = param.miniProgramId // "gh_d43f693ca31f" // 小程序原始id
         miniProgramObj.path =
-            param.miniProgramPath  // "/pages/media" //小程序页面路径；对于小游戏，可以只传入 query 部分，来实现传参效果，如：传入 "?foo=bar"
+            param.miniProgramPath // "/pages/media" //小程序页面路径；对于小游戏，可以只传入 query 部分，来实现传参效果，如：传入 "?foo=bar"
         val msg = WXMediaMessage(miniProgramObj)
         msg.title = param.title // 小程序消息title
         msg.description = param.description // 小程序消息desc
@@ -81,7 +99,7 @@ internal class WechatShare(api: IWXAPI, param: WechatShareParam) : AbsWechatShar
         return msg
     }
 
-    //分享图片可以通过二进制分享，也可以通过文件路径分享，这里面先实现二进制 分享
+    // 分享图片可以通过二进制分享，也可以通过文件路径分享，这里面先实现二进制 分享
     private fun image(): WXMediaMessage? {
         val err = mutableListOf<String>()
         if (param.bitmap == null) {
@@ -92,7 +110,7 @@ internal class WechatShare(api: IWXAPI, param: WechatShareParam) : AbsWechatShar
             return null
         }
         val bmp = param.bitmap
-        val imgObj = WXImageObject(bmp)  //通过二进制
+        val imgObj = WXImageObject(bmp) // 通过二进制
 //        val imgObj = WXImageObject()   //通过文件分享
 //        imgObj.setImagePath(path)
         val msg = WXMediaMessage()
@@ -162,7 +180,7 @@ internal class WechatShare(api: IWXAPI, param: WechatShareParam) : AbsWechatShar
             properties.joinToString(
                 ",",
                 "{",
-                "}"
+                "}",
             )
         } when share wechat:${param.contentType}"
     }
