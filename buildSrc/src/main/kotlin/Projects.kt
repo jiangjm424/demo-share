@@ -8,6 +8,7 @@ import com.android.build.gradle.TestExtension
 import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
 import com.vanniktech.maven.publish.AndroidSingleVariantLibrary
 import com.vanniktech.maven.publish.MavenPublishBaseExtension
+import com.vanniktech.maven.publish.SonatypeHost
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
@@ -40,7 +41,7 @@ fun Project.setupPublishing(
 ) {
     extensions.configure<MavenPublishBaseExtension> {
         pomFromGradleProperties()
-        publishToMavenCentral()
+        publishToMavenCentral(SonatypeHost.S01)
         signAllPublications()
         action()
 
