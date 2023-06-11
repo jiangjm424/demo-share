@@ -1,9 +1,9 @@
 ﻿为了方便的集成各家三方平台的分享组件，我们这里实现了微信和qq的分享
-## 1
+#### 1
 集成方式
 ```kts
 dependencies {
-    val version = "0.0.3"
+    val version = "0.0.4"
 
     // 必选
     implementation("io.github.jiangjm424:ishare-core:$version")
@@ -16,7 +16,15 @@ dependencies {
     implementation("io.github.jiangjm424:ishare-ui:$version")
 }
 ```
-## 2
+当然还有一个简单的方法，直接依赖全部的lib
+```kt
+dependencies {
+    val version = "0.0.4"
+    implementation("io.github.jiangjm424:ishare-bom:$version")
+}
+```
+
+#### 2
 在依赖后，需要在app启动中进行初始化当依赖了
 ```kt
 class AppDemo : Application() {
@@ -32,7 +40,7 @@ class AppDemo : Application() {
 ```
 > 需要注意的是FactoryShareQQ 和 FactoryShareWechat 分别是在ishare-qq 和 ishare-wechat中，所以只有依赖了这两个库的时候才能在初始分享库的时候添加进来
 
-## 3
+#### 3
 在对应的分享平台中申请appid （https://open.tencent.com/）[https://open.tencent.com/]
 并在编译脚本中添加
 app模块下的build.gradle
@@ -63,6 +71,7 @@ ShareCore.Builder(scene.platform)
 ```
 > 在share方法中还可以提供一个回调来监听分享结果，不过目前这个在微信上不是很完善（微信的分享结果是在activty的回调结果中异步传过来的，目前我们的实现未去处理这一块，后续看情况可以对这一块进行优化）
 这里我们使用的是构建者模式来方便引用分享api, 创建builder时需要指定分享的平台，需要继承自Platform， 指定分享的平台下的场景，如qq好友，qq空间等，继承自Scene。
+
 最后，就是我们需要分享的内容ShareEntity，看一下这个类的定义
 ```kt
 /**
